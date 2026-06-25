@@ -1,0 +1,46 @@
+{
+  "generated_at": "2025-12-12T18:05:55.096150Z",
+  "counts": {
+    "users": 3,
+    "admin_exists": true,
+    "books": 1,
+    "subjects": 1,
+    "courses": 2,
+    "feedbacks": 2,
+    "messages": 2
+  },
+  "subjects_by_dept_sem": [
+    {
+      "department": "MCA",
+      "semester": 1,
+      "count": 1
+    }
+  ],
+  "feedbacks_by_dept_sem": [
+    {
+      "department": "Btech(CSE)",
+      "semester": "2",
+      "count": 1
+    },
+    {
+      "department": "Btech(ISE)",
+      "semester": "4",
+      "count": 1
+    }
+  ],
+  "users_by_dept": [
+    {
+      "department": "Btech(CSE)",
+      "count": 1
+    },
+    {
+      "department": "EWIT",
+      "count": 1
+    },
+    {
+      "department": "MCA",
+      "count": 2
+    }
+  ],
+  "feedbacks_joined_users_by_dept_sem": []
+}
