@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h2 class="mb-4" align="center">Admin Dashboard</h2>
+
+    <!-- ===================== COURSES ===================== -->
+    <div class="card shadow p-4 mb-4">
+        <h4 class="mb-3" align="center">Courses</h4>
+
+        <!-- Add Course Form -->
+        <form method="POST" action="{{ url_for('add_course') }}" class="row g-3 mb-3">
+            <div class="col-md-6">
+                <input type="text" name="course_name" class="form-control" placeholder="Enter Course Name" required>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-success w-100">Add Course</button>
+            </div>
+        </form>
+
+        <!-- Courses List -->
+        {% if courses %}
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Course Name</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in courses %}
+                <tr>
+                    <td>{{ c.name }}</td>
+                    <td>
+                        <a href="{{ url_for('delete_course', course_id=c.id) }}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Delete this course?');">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-muted">No courses added yet.</p>
+        {% endif %}
+    </div>
+
+
+
+
+    <!-- ===================== SUBJECTS & NOTES ===================== -->
+    <div class="card shadow p-4 mb-4">
+        <h4 class="mb-3" align="center">Subjects & Notes</h4>
+
+        <!-- Add Subject Form -->
+        <form method="POST" action="{{ url_for('add_subject') }}" enctype="multipart/form-data" class="row g-3 mb-4">
+            <div class="col-md-3">
+                <input type="text" name="department" class="form-control" placeholder="Department" required>
+            </div>
+            <div class="col-md-2">
+                <input type="text" name="semester" class="form-control" placeholder="Semester" required>
+            </div>
+            <div class="col-md-3">
+                <input type="text" name="subject_name" class="form-control" placeholder="Subject Name" required>
+            </div>
+            <div class="col-md-2">
+                <input type="text" name="subject_code" class="form-control" placeholder="Subject Code" required>
+            </div>
+            <div class="col-md-4 mt-2">
+                <input type="file" name="note_file" class="form-control" accept="application/pdf" required>
+            </div>
+            <div class="col-md-2 mt-2">
+                <button class="btn btn-success w-100">Upload</button>
+            </div>
+        </form>
+
+        <!-- Subjects Table -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Department</th>
+                    <th>Semester</th>
+                    <th>Subject Name</th>
+                    <th>Subject Code</th>
+                    <th>Notes File</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in subjects %}
+                <tr>
+                    <td>{{ s.department }}</td>
+                    <td>{{ s.semester }}</td>
+                    <td>{{ s.subject_name }}</td>
+                    <td>{{ s.subject_code }}</td>
+                    <td>{{ s.filename }}</td>
+                    <td>
+                        <a href="{{ url_for('download_note', filename=s.filename) }}" class="btn btn-primary btn-sm">View</a>
+                        <a href="{{ url_for('delete_subject', subject_id=s.id) }}" class="btn btn-danger btn-sm"
+                           onclick="return confirm('Delete this subject?');">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+    <!-- ===================== BOOKS ===================== -->
+    <div class="card shadow p-4 mb-4">
+        <h4 class="mb-3" align="center">Books Library</h4>
+
+        <!-- Add Book Form -->
+        <form method="POST" action="{{ url_for('add_book') }}" enctype="multipart/form-data" class="row g-3 mb-4">
+            <div class="col-md-4">
+                <input type="text" name="title" class="form-control" placeholder="Book Title" required>
+            </div>
+            <div class="col-md-4">
+                <input type="text" name="author" class="form-control" placeholder="Author Name" required>
+            </div>
+            <div class="col-md-4">
+                <input type="file" name="book_file" class="form-control" accept="application/pdf" required>
+            </div>
+            <div class="col-md-3 mt-2">
+                <button class="btn btn-success w-100">Upload Book</button>
+            </div>
+        </form>
+
+        <!-- Books Table -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Book Title</th>
+                    <th>Author</th>
+                    <th>PDF</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for b in books %}
+                <tr>
+                    <td>{{ b.title }}</td>
+                    <td>{{ b.author }}</td>
+                    <td>{{ b.filename }}</td>
+                    <td>
+                        <a href="{{ url_for('download_book', filename=b.filename) }}" class="btn btn-primary btn-sm">View</a>
+                        <a href="{{ url_for('delete_book', book_id=b.id) }}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Delete this book?');">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+
+    <!-- ===================== USERS ===================== -->
+    <div class="card shadow p-4 mb-4">
+        <h4 class="mb-3" align="center">User Logs</h4>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Department</th>
+                    <th>Last Login</th>
+                    <th>Registered On</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr>
+                    <td>{{ u.username }}</td>
+                    <td>{{ u.department }}</td>
+                    <td>{{ u.last_login }}</td>
+                    <td>{{ u.registered_on }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+
+
+
+    <!-- ===================== FEEDBACK ===================== -->
+    <div class="card shadow p-4 mb-4">
+        <h4 class="mb-3" align="center">Feedback</h4>
+
+        <ul class="list-group">
+            {% for fb in feedbacks %}
+            <li class="list-group-item">
+                <strong>{{ fb.name }}</strong>
+                ({{ fb.department }} - Sem {{ fb.semester }})
+                <p>{{ fb.feedback }}</p>
+
+                <a href="{{ url_for('delete_feedback', feedback_id=fb.id) }}"
+                   class="btn btn-danger btn-sm"
+                   onclick="return confirm('Delete this feedback?');">Delete</a>
+            </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+
+
+
+    <!-- ===================== CONTACT MESSAGES ===================== -->
+    <div class="card shadow p-4 mb-4">
+        <h4 class="mb-3" align="center">Contact Messages</h4>
+
+        <ul class="list-group">
+            {% for m in messages %}
+            <li class="list-group-item">
+                <strong>{{ m.name }}</strong> ({{ m.email }})
+                <br>
+                <b>{{ m.subject }}</b>
+                <p>{{ m.message }}</p>
+                <small class="text-muted">{{ m.timestamp }}</small>
+
+                <a href="{{ url_for('delete_message', message_id=m.id) }}"
+                   class="btn btn-danger btn-sm mt-2"
+                   onclick="return confirm('Delete this message?');">Delete</a>
+            </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+</div>
+{% endblock %}
