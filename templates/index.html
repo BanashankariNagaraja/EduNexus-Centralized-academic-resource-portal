@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block title %}Edunexus — Home{% endblock %}
+
+{% block content %}
+
+<!-- FULL SCREEN GLASS WRAPPER -->
+<div class="container-fluid d-flex align-items-center justify-content-center"
+     style="min-height:85vh;">
+
+  <div class="glass w-100 h-100 p-5 mx-3"
+       style="max-width:1300px; min-height:75vh;">
+
+    <!-- HERO SECTION -->
+    <div class="row text-center mb-5">
+      <div class="col-12">
+
+        <h1 class="fw-bold mb-3" style="color:#1f2937;">
+          Welcome to EduNexus
+        </h1>
+
+        <p class="text-muted fs-5 mb-4">
+          A centralized academic resource portal for notes, books, subjects,
+          and learning materials — all in one place.
+        </p>
+
+        <a href="{{ url_for('login') }}" class="btn btn-primary px-4 me-2">
+          <i class="fa fa-book me-1"></i> Browse Library
+        </a>
+
+        <a href="{{ url_for('register') }}" class="btn btn-outline-dark px-4">
+          <i class="fa fa-user-plus me-1"></i> Get Started
+        </a>
+
+      </div>
+    </div>
+
+    <!-- FEEDBACK SECTION -->
+    {% if feedbacks %}
+    <hr class="my-4">
+
+    <h5 class="text-center fw-semibold mb-4">
+      What Students Say
+    </h5>
+
+    <div class="row">
+      {% for f in feedbacks %}
+      <div class="col-md-4">
+        <div class="glass-card mb-4 h-100">
+
+          <strong>{{ f[0] }}</strong>
+
+          <p class="text-muted mb-1">
+            <small>{{ f[1] }} – Semester {{ f[2] }}</small>
+          </p>
+
+          <p class="mb-0">
+            {{ f[3] }}
+          </p>
+
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %}
